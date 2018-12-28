@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="css in js,react,styled components,">
 
 
 
@@ -79,16 +79,25 @@
 
 
 
-<meta name="description" content="我叫阿良，善良的良">
-<meta property="og:type" content="website">
-<meta property="og:title" content="果实">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
+<meta name="keywords" content="css in js,react,styled components">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css in js 实践">
+<meta property="og:url" content="http://yoursite.com/2018/12/28/css-in-js-实践/index.html">
 <meta property="og:site_name" content="果实">
-<meta property="og:description" content="我叫阿良，善良的良">
+<meta property="og:description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL3I?w=594&h=442">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4q?w=326&h=54">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4r?w=492&h=78">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4x?w=366&h=155">
+<meta property="og:image" content="https://segmentfault.com/img/bVblNs0?w=739&h=156">
+<meta property="og:image" content="https://segmentfault.com/img/bVblNtt?w=320&h=124">
+<meta property="og:updated_time" content="2018-12-28T06:27:26.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="果实">
-<meta name="twitter:description" content="我叫阿良，善良的良">
+<meta name="twitter:title" content="css in js 实践">
+<meta name="twitter:description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVblL3I?w=594&h=442">
 
 
 
@@ -118,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2018/12/28/css-in-js-实践/">
 
 
 
 
 
-  <title>果实</title>
+  <title>css in js 实践 | 果实</title>
   
 
 
@@ -143,8 +152,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-  page-home">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/navigatorOpera"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -277,9 +285,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -309,9 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/28/css-in-js-实践/" itemprop="url">css in js 实践</a></h1>
+          <h1 class="post-title" itemprop="name headline">css in js 实践</h1>
         
 
         <div class="post-meta">
@@ -361,9 +367,7 @@
       
 
       
-        
-          
-            <p>最近需要做一个表格组件，组件需求:</p>
+        <p>最近需要做一个表格组件，组件需求:</p>
 <ol>
 <li>指定行、列</li>
 <li>可以跨行、跨列</li>
@@ -403,8 +407,6 @@
 <p>下一章，我会根据<code>styled componnets</code>源码解答上述问题。</p>
 <p>最后，祝生活愉快。</p>
 
-          
-        
       
     </div>
     
@@ -419,144 +421,40 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/26/个人简历/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="果实">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="果实">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/26/个人简历/" itemprop="url">个人简历</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-26T14:45:46+08:00">
-                2018-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-
+            <a href="/tags/css-in-js/" rel="tag"># css in js</a>
           
-            
+            <a href="/tags/react/" rel="tag"># react</a>
           
-
+            <a href="/tags/styled-components/" rel="tag"># styled components</a>
           
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>  姓名:李录飞  </p>
-<ul>
-<li>HTMl5</li>
-<li>CSS3 &amp; Less, SCSS, PostCSS, Stylus, CSS In Modules</li>
-<li>ES6/7/8, TS</li>
-<li>React + React-Router + React-Redux/Mobx-React + Webpack + Babel [ + Eslint]</li>
-<li>Vue + Vue-Router + Vuex + Webpack + Babel </li>
-<li>Weex</li>
-<li>Taro</li>
-<li><code>RN</code></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/26/个人简历/" rel="next" title="个人简历">
+                <i class="fa fa-chevron-left"></i> 个人简历
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -566,10 +464,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -577,6 +476,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -788,6 +691,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
