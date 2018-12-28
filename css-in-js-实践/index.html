@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
+<meta property="og:type" content="website">
+<meta property="og:title" content="css in js 实践">
+<meta property="og:url" content="http://yoursite.com/css-in-js-实践/index.html">
+<meta property="og:site_name" content="果实">
+<meta property="og:description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL3I?w=594&h=442">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4q?w=326&h=54">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4r?w=492&h=78">
+<meta property="og:image" content="https://segmentfault.com/img/bVblL4x?w=366&h=155">
+<meta property="og:image" content="https://segmentfault.com/img/bVblNs0?w=739&h=156">
+<meta property="og:image" content="https://segmentfault.com/img/bVblNtt?w=320&h=124">
+<meta property="og:updated_time" content="2018-12-28T06:20:05.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="css in js 实践">
+<meta name="twitter:description" content="最近需要做一个表格组件，组件需求:  指定行、列 可以跨行、跨列 行和行之间有分割线  最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用css in js的形式。关于css in js相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。 在github上找了一下关于这方面的组件，发现[styled comp">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVblL3I?w=594&h=442">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/css-in-js-实践/">
+
+
+
+
+
+  <title>css in js 实践 | 果实</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/navigatorOpera"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">果实</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-something">
+          <a href="/something" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            其他
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+	<h1 class="post-title" itemprop="name headline">css in js 实践</h1>
+
+
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>最近需要做一个表格组件，组件需求:</p>
+<ol>
+<li>指定行、列</li>
+<li>可以跨行、跨列</li>
+<li>行和行之间有分割线</li>
+</ol>
+<p>最终采用grid实现需求。实现的时候遇到一个问题，如果css和js分开写，css只能是定值，没有灵活性。所以考虑采用<code>css in js</code>的形式。关于<code>css in js</code>相关的概念介绍可以参考阮一峰老师的文章：[css in js 介绍][1]。</p>
+<p>在github上找了一下关于这方面的组件，发现[styled components][2]    非常不错，简单易上手，</p>
+<pre><code>npm下载：`npm i styled-components -S`
+</code></pre><p> <strong><em>注意：</em></strong><br>    React &lt; 16 需要下载3.x.x版本的</p>
+<p>根据文档先写一个简单的demo。</p>
+<p><img src="https://segmentfault.com/img/bVblL3I?w=594&amp;h=442" alt="图片描述"></p>
+<p>可以看到，它的实现方式并不是传统的以对象的形式写样式，而是将需要添加样式的元素加到styled对象上，然后跟一个(<code></code>)反引号标签，在里面以正常的css格式写样式。然后返回一个组件，把组件替换原来的div即可。</p>
+<p>实现效果：<br><img src="https://segmentfault.com/img/bVblL4q?w=326&amp;h=54" alt="图片描述"></p>
+<p>html代码：<br><img src="https://segmentfault.com/img/bVblL4r?w=492&amp;h=78" alt="图片描述"></p>
+<p>css代码：<br><img src="https://segmentfault.com/img/bVblL4x?w=366&amp;h=155" alt="图片描述"></p>
+<p>刚才我们添加样式的元素是html元素，那么给组件添加样式可以么？实践一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const H1 = (&#123; className &#125;) =&gt; &lt;h3 className=&#123;className&#125;&gt;我是App&lt;/h3&gt;;</span><br><span class="line">const HH = styled.H1`</span><br><span class="line">  font-size: 30px;</span><br><span class="line">  color: red;</span><br><span class="line">`;</span><br></pre></td></tr></table></figure>
+<p>运行，报错：</p>
+<p><img src="https://segmentfault.com/img/bVblNs0?w=739&amp;h=156" alt="clipboard.png"></p>
+<p>咋回事？原来styled不支持以 . 符号的形式为组件添加样式，需要以参数形式传递，修改上面代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const HH = styled(H1)`</span><br><span class="line">  font-size: 30px;</span><br><span class="line">  color: red;</span><br><span class="line">`;</span><br></pre></td></tr></table></figure>
+<p>将<code>H1</code>组件以参数形式传递给styled,就可以了。</p>
+<p>   <img src="https://segmentfault.com/img/bVblNtt?w=320&amp;h=124" alt="clipboard.png"></p>
+<p>想给元素添加伪元素样式，子元素样式可以么？没问题，<code>styled components</code>支持样式嵌套，按照类似Less或Scss的书写方式就可以了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const Container = styled.div`</span><br><span class="line">  width: 300px;</span><br><span class="line">  max-width: 500px;</span><br><span class="line">  min-width: 200px;</span><br><span class="line">  transition: all 1s ease-in-out;</span><br><span class="line">  background-color: rgba(240, 240, 240, 0.9);</span><br><span class="line">  ::after &#123;</span><br><span class="line">    content: &apos;after&apos;;</span><br><span class="line">    display: table;</span><br><span class="line">    color: blue;</span><br><span class="line">  &#125;</span><br><span class="line">  span &#123;</span><br><span class="line">    color: green;</span><br><span class="line">  &#125;</span><br><span class="line">`;</span><br></pre></td></tr></table></figure>
+<p>以上我们写的组件都是在Class外面，那我们要根据props设定样式怎么办？<code>styled components</code>同样支持在Class内生成组件，并接受props传递过来的值，<strong>这个props并不是我们的Class接收的props</strong>，它是添加样式的元素上的Props，意思就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class Demo &#123;</span><br><span class="line">    </span><br><span class="line">    render()&#123;</span><br><span class="line">        return &lt;Styled name=&quot;guoshi&quot;&gt;&lt;/Styled&gt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Demo.defaultProps = &#123;</span><br><span class="line">    age: 18</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const Styled = styled.p`</span><br><span class="line">    color: $&#123;props=&gt;&#123;console.log(props)&#125;&#125; // &#123;name: &quot;guoshi&quot;,theme:&#123;...&#125;&#125;</span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>如果想使用Class的props怎么办？看代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">generateStyle = () =&gt; &#123;</span><br><span class="line">        const &#123;row, col, justify, data, prefixCls, showborder = true, rowgap = 0, colgap = 0&#125; = this.props;</span><br><span class="line">        const child = [];</span><br><span class="line">        data.map((item,index)=&gt; (item.colSpan || item.rowSpan) ? child.push(&#123;index:index+1,colSpan:item.colSpan, rowSpan:item.rowSpan&#125;):null);</span><br><span class="line">        const bordernone = [];</span><br><span class="line">        for(let i = 0; i &lt; row; i++) &#123;</span><br><span class="line">            bordernone.push(1 + i*col);</span><br><span class="line">        &#125;</span><br><span class="line">        const UlContainer = styled.ul.attrs(&#123;className: prefixCls&#125;)`</span><br><span class="line">                display: grid;</span><br><span class="line">                grid-template-columns: $&#123;()=&gt; &#123;</span><br><span class="line">                    let arr = [];</span><br><span class="line">                    arr.length = col;</span><br><span class="line">                    return arr.fill(&apos;1fr&apos;).join(&apos; &apos;);</span><br><span class="line">                &#125;&#125;;</span><br><span class="line">                grid-template-rows:  $&#123;()=&gt; &#123;</span><br><span class="line">                    let arr = [];</span><br><span class="line">                    arr.length = row;</span><br><span class="line">                    return arr.fill(&apos;1fr&apos;).join(&apos; &apos;);</span><br><span class="line">                &#125;&#125;;</span><br><span class="line">                grid-gap: $&#123;rowgap&#125; $&#123;colgap&#125; ;</span><br><span class="line">                justify-items: $&#123;()=&gt; justify || &quot;center&quot;&#125;;</span><br><span class="line"></span><br><span class="line">                ::before &#123;</span><br><span class="line">                    display: none;</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                li &#123;</span><br><span class="line">                    width: 100% !important;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                $&#123;</span><br><span class="line">                     child.map((&#123;index, colSpan, rowSpan&#125;) =&gt;`</span><br><span class="line">                        li:nth-child($&#123;index&#125;) &#123;</span><br><span class="line">                            grid-column-start: $&#123;index%col === 0 ? index : index%col&#125;;</span><br><span class="line">                            grid-column-end: $&#123;colSpan ? (colSpan+(index%col === 0 ? index : index%col)) : ((index%col === 0 ? index : index%col)+1)&#125;</span><br><span class="line">                            grid-row-start: $&#123;Math.ceil(index/col)&#125;;</span><br><span class="line">                            grid-row-end: $&#123;rowSpan  ? rowSpan+Math.ceil(index/col) : Math.ceil(index/col)+1&#125;;</span><br><span class="line">                            align-items: start;</span><br><span class="line">                        &#125;</span><br><span class="line">                     `).join(&apos; &apos;)</span><br><span class="line">                 &#125;</span><br><span class="line">                </span><br><span class="line">                li + li &#123;</span><br><span class="line">                    border-left: 1px dashed rgba(0,0,0,0.3);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                $&#123;</span><br><span class="line">                    bordernone.map(bordernoneindex=&gt;`</span><br><span class="line">                        li:nth-child($&#123;bordernoneindex&#125;) &#123;</span><br><span class="line">                            border-left: none;</span><br><span class="line">                        &#125;</span><br><span class="line">                    `).join(&apos; &apos;)</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            `;</span><br><span class="line">        </span><br><span class="line">            return UlContainer;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>提前把最后代码放出来了，<code>styled.ul.attrs({})</code>就是为元素添加额外的属性，比如className、placeholder等，从代码中可以看到，无论是Class的props还是元素自身传进来的props，styled都可以接收,你可以自定义任何你想实现的规则,更方便我们配置的灵活性。</p>
+<p>其实到这里，使用上没有任何问题了，关于keyframes等规则官网上都有demo，也非常容易实现。想尝试的小伙伴现在就可以码一遍。不过本章遗留了很多问题：</p>
+<ol>
+<li>styled.div &amp; styled(div) 有什么区别</li>
+<li>模版字符串中的样式是怎么解析的？为什么可以嵌套？</li>
+<li>为什么会返回一个组件？</li>
+</ol>
+<p>下一章，我会根据<code>styled componnets</code>源码解答上述问题。</p>
+<p>最后，祝生活愉快。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="果实">
+            
+              <p class="site-author-name" itemprop="name">果实</p>
+              <p class="site-description motion-element" itemprop="description">我叫阿良，善良的良</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">果实</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
